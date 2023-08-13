@@ -36,32 +36,44 @@ public class Core {
     public void createParkingLot(String parkingLotId, int numberOfFloors, int numberOfSlots){
         ASSUMED_PARKING_LOT = parkingLotId;
         parkingLotHashMap.put(parkingLotId, new ParkingLot(parkingLotId, numberOfFloors, numberOfSlots));
-        getLogger().log(Logger.LogLevel.DEBUG,"Parking Lot Created!");
+        getLogger().log(Logger.LogLevel.DEBUG,"Parking Lot Created!: ", parkingLotId);
     }
 
 
     public void parkVehicle(Vehicle.VehicleType vehicleType, String regNo, String color) throws ParkingLotOccupied, VehicleNotSupported {
         Ticket ticket = parkingLotHashMap.get(ASSUMED_PARKING_LOT).parkVehicle(new Vehicle(vehicleType, regNo, color));
         ticketHashMap.put(ticket.getId(), ticket);
-        getLogger().log("Vehicle Parked! with ticket id: ", ticket.getId());
+        getLogger().log(Logger.LogLevel.INFO, "Vehicle Parked! with ticket id: ", ticket.getId());
     }
 
     public void unparkVehicle(String ticketId){
         parkingLotHashMap.get(ASSUMED_PARKING_LOT).unparkVehicle(ticketHashMap.get(ticketId));
         ticketHashMap.remove(ticketId);
+        getLogger().log(Logger.LogLevel.INFO, "Vehicle Unparked! with ticket id: ", ticketId);
     }
 
     public void displayFreeCount(Vehicle.VehicleType vehicleType){
-        getLogger().log("Vehicle Unparked!");
+        for(ParkingFloor parkingFloor: parkingLotHashMap.get(ASSUMED_PARKING_LOT).getParkingFloors() ){
+            getLogger().log(Logger.LogLevel.INFO,"No. of free slots for ", vehicleType," on ",parkingFloor.getFloorNumber(),": ", parkingFloor.getVehicleToOccupiedSlots().get(vehicleType));
+        }
     }
 
-    public void displayFreeSlots(Vehicle.VehicleType vehicleType){
-        getLogger().log("Vehicle Unparked!");
+    public void displayOccupiedOrFreeSlots(Vehicle.VehicleType vehicleType, boolean displayOccupied){
+        for(ParkingFloor parkingFloor: parkingLotHashMap.get(ASSUMED_PARKING_LOT).getParkingFloors() ){
+            String st = "";
+            for(int i = 0;i < parkingFloor.getParkingSlots().size();i++){
+                ParkingSlot parkingSlot = parkingFloor.getParkingSlots().get(i);
+                if(parkingSlot.getSupportedVehicleType() == vehicleType &&  (parkingSlot.isOccupied() && displayOccupied || !parkingSlot.isOccupied() && !displayOccupied)){
+                    st += String.valueOf(i+1) +", ";
+                }
+
+            }
+            getLogger().log(Logger.LogLevel.INFO, displayOccupied? "Occupied": "Free" ,"slots for ", vehicleType," on ",parkingFloor.getFloorNumber(),": ", st);
+
+        }
     }
 
-    public void displayOccupiedSlots(Vehicle.VehicleType vehicleType){
-        getLogger().log("Vehicle Unparked!");
-    }
+
 
     private void resolveCommand(String[] command){
         if(command.length == 0){
@@ -101,9 +113,9 @@ public class Core {
                 if(displayType.equalsIgnoreCase("free_count")){
                     displayFreeCount(vehicleType);
                 }else if(displayType.equalsIgnoreCase("free_slots")){
-                    displayFreeSlots(vehicleType);
+                    displayOccupiedOrFreeSlots(vehicleType, false);
                 }else if(displayType.equalsIgnoreCase("occupied_slots")){
-                    displayOccupiedSlots(vehicleType);
+                    displayOccupiedOrFreeSlots(vehicleType, true);
                 }
 
             }else if(commandName.equalsIgnoreCase("exit")){
@@ -113,21 +125,25 @@ public class Core {
             }
 
         }catch (NumberFormatException e){
-            getLogger().log("The arguments are invalid for command: ", commandName);
+            getLogger().log(Logger.LogLevel.ERROR,"The arguments are invalid for command: ", commandName);
         }catch (VehicleNotFound e){
-            getLogger().log("Vehicle Not Found", commandName);
+            getLogger().log(Logger.LogLevel.ERROR,"Vehicle Not Found", commandName);
         }catch (ParkingLotOccupied e){
-            getLogger().log("Parking Lot Occupied!", commandName);
+            getLogger().log(Logger.LogLevel.ERROR,"Parking Lot Occupied!", commandName);
         } catch (InvalidTicket e) {
-            getLogger().log("Ticket not found or expired", commandName);
+            getLogger().log(Logger.LogLevel.ERROR,"Ticket not found or expired", commandName);
         }catch (VehicleNotSupported e) {
-            getLogger().log("Vehicle not supported", commandName);
+            getLogger().log(Logger.LogLevel.ERROR,"Vehicle not supported", commandName);
         }
 
+        displayHR();
     }
 
     public void invalidCommand(){
-        getLogger().log("Please enter a valid command");
+        getLogger().log(Logger.LogLevel.ERROR, "Please enter a valid command");
+    }
+    public void displayHR(){
+        getLogger().log("----------------------------------------------------------------------");
     }
 
     public Vehicle.VehicleType getVehicleValue(String vehicle) throws VehicleNotFound {

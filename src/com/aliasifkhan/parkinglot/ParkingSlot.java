@@ -36,4 +36,8 @@ public class ParkingSlot {
     public Vehicle.VehicleType getSupportedVehicleType() {
         return supportedVehicleType;
     }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
 }

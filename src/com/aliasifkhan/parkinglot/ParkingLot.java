@@ -23,13 +23,13 @@ public class ParkingLot {
         ParkingFloor parkableFloor = null;
 
         for(ParkingFloor f: parkingFloors){
-            if(!f.isOccupied()){
+            if(!f.isOccupied(vehicle)){
                 parkableFloor = f;
                 break;
             }
         }
 
-        if(parkableFloor == null || parkableFloor.isOccupied()){
+        if(parkableFloor == null || parkableFloor.isOccupied(vehicle)){
             throw new ParkingLotOccupied();
         }
         int floorNumber = parkableFloor.getFloorNumber();
@@ -42,5 +42,9 @@ public class ParkingLot {
     public void unparkVehicle(Ticket ticket){
         ticket.setExpired(true);
         parkingFloors.get(ticket.getFloorNumber() - 1).unparkVehicle(ticket.getSlotNumber() - 1);
+    }
+
+    public ArrayList<ParkingFloor> getParkingFloors() {
+        return parkingFloors;
     }
 }

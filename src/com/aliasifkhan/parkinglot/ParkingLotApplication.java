@@ -13,15 +13,15 @@ public class ParkingLotApplication implements Application {
 
     @Override
     public void init() {
-        getLogger().log("Initializing Parking Application......");
-        getLogger().setLevel(Logger.LogLevel.DEBUG);
+        getLogger().setLevel(Logger.LogLevel.ERROR);
+        getLogger().log(Logger.LogLevel.INFO,"Initializing Parking Application......");
         core = new Core();
         core.init();
     }
 
     @Override
     public void run() {
-        getLogger().log("Running Parking Application......");
+        getLogger().log(Logger.LogLevel.INFO,"Running Parking Application......");
         core.run();
     }
 
