@@ -29,6 +29,7 @@ public class Core {
         System.out.println("Enter a command: ");
         while(isRunning){
             String[] command = CommandProcesser.getCommandProcesser().readCommand();
+            displayHR();
             resolveCommand(command);
         }
     }
@@ -125,18 +126,18 @@ public class Core {
             }
 
         }catch (NumberFormatException e){
-            getLogger().log(Logger.LogLevel.ERROR,"The arguments are invalid for command: ", commandName);
+            getLogger().log(Logger.LogLevel.ERROR,"The arguments are invalid for command: ");
         }catch (VehicleNotFound e){
-            getLogger().log(Logger.LogLevel.ERROR,"Vehicle Not Found", commandName);
+            getLogger().log(Logger.LogLevel.ERROR,"Vehicle Not Found");
         }catch (ParkingLotOccupied e){
-            getLogger().log(Logger.LogLevel.ERROR,"Parking Lot Occupied!", commandName);
+            getLogger().log(Logger.LogLevel.ERROR,"Parking Lot Occupied!");
         } catch (InvalidTicket e) {
-            getLogger().log(Logger.LogLevel.ERROR,"Ticket not found or expired", commandName);
+            getLogger().log(Logger.LogLevel.ERROR,"Ticket not found or expired");
         }catch (VehicleNotSupported e) {
-            getLogger().log(Logger.LogLevel.ERROR,"Vehicle not supported", commandName);
+            getLogger().log(Logger.LogLevel.ERROR,"Vehicle not supported");
         }
 
-        displayHR();
+
     }
 
     public void invalidCommand(){
