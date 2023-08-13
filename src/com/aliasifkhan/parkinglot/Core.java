@@ -54,7 +54,7 @@ public class Core {
 
     public void displayFreeCount(Vehicle.VehicleType vehicleType){
         for(ParkingFloor parkingFloor: parkingLotHashMap.get(ASSUMED_PARKING_LOT).getParkingFloors() ){
-            getLogger().log(Logger.LogLevel.INFO,"No. of free slots for ", vehicleType," on ",parkingFloor.getFloorNumber(),": ", parkingFloor.getVehicleToOccupiedSlots().get(vehicleType));
+            getLogger().log(Logger.LogLevel.INFO,"No. of free slots for ", vehicleType," on ",parkingFloor.getFloorNumber(),": ", parkingFloor.getFreeSlotsForVehicle(vehicleType));
         }
     }
 

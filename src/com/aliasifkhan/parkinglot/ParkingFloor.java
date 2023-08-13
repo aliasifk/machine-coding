@@ -43,6 +43,20 @@ public class ParkingFloor {
         return false;
     }
 
+    public int getFreeSlotsForVehicle(Vehicle.VehicleType vehicleType){
+        switch (vehicleType){
+            case Truck:
+                return 1 - vehicleToOccupiedSlots.get(Truck);
+            case Bike:
+                return  2 - vehicleToOccupiedSlots.get(Bike) ;
+            case Car:
+                return (parkingSlots.size() - 3) - vehicleToOccupiedSlots.get(Car);
+        }
+
+        return 0;
+    }
+
+
     public int parkVehicle(Vehicle vehicle) throws VehicleNotSupported, ParkingLotOccupied {
 
         for(ParkingSlot slot:  parkingSlots){
@@ -64,6 +78,7 @@ public class ParkingFloor {
         parkingSlots.get(slotNumber).unparkVehicle();
 
     }
+
 
     public int getFloorNumber() {
         return floorNumber;
