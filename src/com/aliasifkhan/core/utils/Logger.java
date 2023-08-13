@@ -6,7 +6,7 @@ public class Logger {
     private LogLevel level;
 
     private Logger() {
-        setLevel(LogLevel.INFO);
+        setLevel(LogLevel.DEBUG);
     }
 
     public static Logger getLogger() {
@@ -18,26 +18,16 @@ public class Logger {
     }
 
     public void log(Object... msg) {
-        log("", msg);
+        log(level, msg);
     }
-
-    public void log(String tag, Object... msg) {
-        log(LogLevel.DEBUG, tag, msg);
-    }
-
 
     private static final transient StringBuilder logMessage = new StringBuilder();
-    public void log(LogLevel logLevel, String tag, Object... msg) {
+    public void log(LogLevel logLevel, Object... msg) {
         if (this.level == LogLevel.NONE) {
             return;
         }
 
         if (logLevel.ordinal() >= this.level.ordinal()) {
-            if(tag != null && !tag.isEmpty()){
-                logMessage.append(tag);
-                logMessage.append(":");
-            }
-
             for (Object item : msg) {
                 logMessage.append(item).append(" ");
             }
