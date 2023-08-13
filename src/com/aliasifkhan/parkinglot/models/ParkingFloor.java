@@ -1,4 +1,4 @@
-package com.aliasifkhan.parkinglot;
+package com.aliasifkhan.parkinglot.models;
 
 import com.aliasifkhan.parkinglot.exceptions.ParkingLotOccupied;
 import com.aliasifkhan.parkinglot.exceptions.VehicleNotSupported;
@@ -6,8 +6,7 @@ import com.aliasifkhan.parkinglot.exceptions.VehicleNotSupported;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static com.aliasifkhan.core.utils.Logger.getLogger;
-import static com.aliasifkhan.parkinglot.Vehicle.VehicleType.*;
+import static com.aliasifkhan.parkinglot.models.Vehicle.VehicleType.*;
 
 public class ParkingFloor {
     private int floorNumber;

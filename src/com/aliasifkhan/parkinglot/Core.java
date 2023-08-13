@@ -6,9 +6,9 @@ import com.aliasifkhan.parkinglot.exceptions.InvalidTicket;
 import com.aliasifkhan.parkinglot.exceptions.ParkingLotOccupied;
 import com.aliasifkhan.parkinglot.exceptions.VehicleNotFound;
 import com.aliasifkhan.parkinglot.exceptions.VehicleNotSupported;
+import com.aliasifkhan.parkinglot.models.*;
 
 import java.util.HashMap;
-import java.util.NoSuchElementException;
 
 import static com.aliasifkhan.core.utils.Logger.getLogger;
 

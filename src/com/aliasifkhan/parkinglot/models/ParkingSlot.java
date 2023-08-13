@@ -1,4 +1,4 @@
-package com.aliasifkhan.parkinglot;
+package com.aliasifkhan.parkinglot.models;
 
 import com.aliasifkhan.parkinglot.exceptions.VehicleNotSupported;
 

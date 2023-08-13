@@ -1,6 +1,4 @@
-package com.aliasifkhan.parkinglot;
-
-import java.util.UUID;
+package com.aliasifkhan.parkinglot.models;
 
 public class Vehicle {
     private String regNo;

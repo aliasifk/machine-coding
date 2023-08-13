@@ -1,7 +1,6 @@
-package com.aliasifkhan.parkinglot;
+package com.aliasifkhan.parkinglot.models;
 
 import com.aliasifkhan.parkinglot.exceptions.ParkingLotOccupied;
-import com.aliasifkhan.parkinglot.exceptions.VehicleNotFound;
 import com.aliasifkhan.parkinglot.exceptions.VehicleNotSupported;
 
 import java.util.ArrayList;
