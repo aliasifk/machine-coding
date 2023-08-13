@@ -2,6 +2,8 @@ package com.aliasifkhan.parkinglot;
 
 import com.aliasifkhan.core.utils.CommandProcesser;
 import com.aliasifkhan.core.utils.Logger;
+import com.aliasifkhan.parkinglot.exceptions.ParkingLotOccupied;
+import com.aliasifkhan.parkinglot.exceptions.VehicleNotFound;
 
 import java.util.HashMap;
 import java.util.NoSuchElementException;
@@ -10,11 +12,14 @@ import static com.aliasifkhan.core.utils.Logger.getLogger;
 
 public class Core {
     private HashMap<String, ParkingLot> parkingLotHashMap;
+    private HashMap<String, Ticket> ticketHashMap;
 
+    public static String ASSUMED_PARKING_LOT;
     private boolean isRunning;
 
     public void init(){
         parkingLotHashMap = new HashMap<>();
+        ticketHashMap = new HashMap<>();
         isRunning = true;
     }
 
@@ -26,11 +31,15 @@ public class Core {
     }
 
     public void createParkingLot(String parkingLotId, int numberOfFloors, int numberOfSlots){
+        ASSUMED_PARKING_LOT = parkingLotId;
         parkingLotHashMap.put(parkingLotId, new ParkingLot(parkingLotId, numberOfFloors, numberOfSlots));
         getLogger().log(Logger.LogLevel.DEBUG,"Parking Lot Created!");
     }
 
-    public void parkVehicle(Vehicle.VehicleType vehicleType, String regNo, String color){
+
+    public void parkVehicle(Vehicle.VehicleType vehicleType, String regNo, String color) throws ParkingLotOccupied {
+        Ticket ticket = parkingLotHashMap.get(ASSUMED_PARKING_LOT).parkVehicle(new Vehicle(vehicleType, regNo, color));
+        ticketHashMap.put(ticket.getId(), ticket);
         getLogger().log("Vehicle Parked!");
     }
 
@@ -51,7 +60,7 @@ public class Core {
     }
 
     private void resolveCommand(String[] command){
-        if(command.length ==0){
+        if(command.length == 0){
             invalidCommand();
         }
         String commandName = command[0];
@@ -98,21 +107,24 @@ public class Core {
 
         }catch (NumberFormatException e){
             getLogger().log("The arguments are invalid for command: ", commandName);
-        }catch (NoSuchElementException e){
+        }catch (VehicleNotFound e){
             getLogger().log("Vehicle Not Found", commandName);
+        }catch (ParkingLotOccupied e){
+            getLogger().log("Parking Lot Occupied!", commandName);
         }
+
     }
 
     public void invalidCommand(){
         getLogger().log("Please enter a valid command");
     }
 
-    public Vehicle.VehicleType getVehicleValue(String vehicle){
+    public Vehicle.VehicleType getVehicleValue(String vehicle) throws VehicleNotFound {
         for(Vehicle.VehicleType v: Vehicle.VehicleType.values()){
             if(v.toString().equalsIgnoreCase(vehicle))
                 return v;
         }
-        throw new NoSuchElementException();
+        throw new VehicleNotFound();
     }
 
 }

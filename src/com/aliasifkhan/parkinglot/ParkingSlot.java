@@ -13,6 +13,14 @@ public class ParkingSlot {
     }
 
     public boolean isOccupied(){
-        return vehicle == null;
+        return vehicle != null;
+    }
+
+    public void parkVehicle(Vehicle vehicle){
+        this.vehicle = vehicle;
+    }
+
+    public int getSlotNumber() {
+        return slotNumber;
     }
 }
