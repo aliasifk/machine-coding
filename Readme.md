@@ -1,33 +1,37 @@
-# Machine Coding Interview Problems in Java
+# Machine Coding Interview Problems and Reusable Boilerplate in Java
 
-Welcome to the **Machine Coding Interview Problems in Java** repository! This repository is a collection of machine coding interview problems and their solutions implemented in Java.
+Welcome to the **Machine Coding Interview Problems and Reusable Boilerplate in Java** repository! This repository is a collection of machine coding interview problems, their solutions implemented in Java, and reusable boilerplate code for various projects.
 
 ## About
 
-Machine coding interviews are an essential part of technical interviews, especially for software engineering roles. These interviews focus on assessing your ability to design and implement a functional system within a limited time frame. By working on these problems, you can enhance your problem-solving skills, object-oriented design understanding, and coding abilities.
+This repository serves a dual purpose:
+
+1. **Machine Coding Interview Problems**: It contains machine coding interview problems designed to assess your system design and coding skills. Each problem is organized into its own project directory and includes a `problem.md` file that explains the question, constraints, and expected behavior.
+
+2. **Reusable Boilerplate**: Alongside the interview problems, you'll find reusable boilerplate code and templates for different types of projects. These boilerplate files provide a starting point for your projects, saving you time and effort in setting up the basic structure.
 
 ## Contents
 
 This repository includes:
 
-- Well-organized directories for different problem domains.
+- Well-organized directories for different problem domains, each containing a `problem.md` file.
 - Java solutions for various machine coding interview problems.
-- Detailed explanations and comments in the code to help you understand the solutions.
+- Reusable boilerplate code and templates for multiple project types.
+- Detailed explanations and comments in the code and boilerplate templates.
 
 ## How to Use
 
-1. Browse the different directories to find problems from different problem domains.
+1. Browse the different directories to find problems from different problem domains. Each project directory contains a `problem.md` file with the problem description.
 2. Navigate to a specific problem to find its Java solution file.
-3. Read the problem description and study the solution code to learn different strategies and techniques.
-
-Feel free to clone or fork this repository and use it as a resource to practice machine coding interview problems.
+3. Explore the reusable boilerplate directories to find templates for various projects.
+4. Clone or fork this repository to use the machine coding problems and boilerplate in your own projects.
 
 ## Contributing
 
-If you'd like to contribute to this repository by adding more problems, improving solutions, or providing better explanations, your contributions are highly appreciated. Please follow the standard contribution guidelines outlined in the repository.
+We encourage contributions to this repository. If you'd like to add more problems, improve solutions, enhance boilerplate templates, or provide better explanations, your contributions are welcome. Please follow the standard contribution guidelines outlined in the repository.
 
 ## Disclaimer
 
-The problems and solutions provided in this repository are meant for educational purposes and practice. They may not cover all possible edge cases and optimizations that may be required in real-world scenarios. Always strive to improve your solutions and learn from different sources.
+The problems, solutions, and boilerplate code provided in this repository are intended for educational purposes and practice. They may not cover all possible edge cases and optimizations that may be required in real-world scenarios. Always strive to improve your solutions and customize the boilerplate templates for your specific project needs.
 
-Happy coding and good luck with your machine coding interview preparation!
+Happy coding, and enjoy the benefits of practicing machine coding problems and utilizing reusable boilerplate for your projects!
