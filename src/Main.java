@@ -1,5 +1,12 @@
+import com.aliasifkhan.core.utils.Application;
+import com.aliasifkhan.parkinglot.ParkingLotApplication;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        Application app = new ParkingLotApplication();
+
+        app.init();
+        app.run();
+
     }
 }
