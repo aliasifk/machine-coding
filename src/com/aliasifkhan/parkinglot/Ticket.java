@@ -10,12 +10,15 @@ public class Ticket {
     private int floorNumber;
     private int slotNumber;
 
+    private boolean isExpired;
+
     public Ticket(String parkingLotId, int floorNumber, int slotNumber, Vehicle vehicle){
         this.id = parkingLotId+"_"+floorNumber+"_"+slotNumber;
         this.floorNumber = floorNumber;
         this.parkingLotId = parkingLotId;
         this.slotNumber = slotNumber;
         this.vehicle = vehicle;
+        this.isExpired = false;
     }
 
     public String getId() {
@@ -37,5 +40,13 @@ public class Ticket {
 
     public int getSlotNumber() {
         return slotNumber;
+    }
+
+    public boolean hasExpired() {
+        return isExpired;
+    }
+
+    public void setExpired(boolean expired) {
+        isExpired = expired;
     }
 }

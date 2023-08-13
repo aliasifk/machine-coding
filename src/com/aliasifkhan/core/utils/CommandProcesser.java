@@ -16,7 +16,7 @@ public class CommandProcesser implements Disposable {
     }
 
     public String[] readCommand(){
-        System.out.print("Enter a command: ");
+
         String inputLine = scanner.nextLine();
         return inputLine.split("\\s+");
     }

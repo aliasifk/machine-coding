@@ -2,6 +2,7 @@ package com.aliasifkhan.parkinglot;
 
 import com.aliasifkhan.parkinglot.exceptions.ParkingLotOccupied;
 import com.aliasifkhan.parkinglot.exceptions.VehicleNotFound;
+import com.aliasifkhan.parkinglot.exceptions.VehicleNotSupported;
 
 import java.util.ArrayList;
 
@@ -17,7 +18,7 @@ public class ParkingLot {
         }
     }
 
-    public Ticket parkVehicle(Vehicle vehicle) throws ParkingLotOccupied {
+    public Ticket parkVehicle(Vehicle vehicle) throws ParkingLotOccupied, VehicleNotSupported {
 
         ParkingFloor parkableFloor = null;
 
@@ -35,5 +36,10 @@ public class ParkingLot {
 
         return new Ticket(id, floorNumber, slotNumber, vehicle);
 
+    }
+
+    public void unparkVehicle(Ticket ticket){
+        ticket.setExpired(true);
+        parkingFloors.get(ticket.getFloorNumber() - 1).unparkVehicle(ticket.getSlotNumber() - 1);
     }
 }

@@ -1,5 +1,7 @@
 package com.aliasifkhan.parkinglot;
 
+import com.aliasifkhan.parkinglot.exceptions.VehicleNotSupported;
+
 import java.util.ArrayList;
 
 import static com.aliasifkhan.core.utils.Logger.getLogger;
@@ -26,7 +28,7 @@ public class ParkingFloor {
         return numberOfSlotsOccupied == parkingSlots.size();
     }
 
-    public int parkVehicle(Vehicle vehicle){
+    public int parkVehicle(Vehicle vehicle) throws VehicleNotSupported {
 
         for(ParkingSlot slot:  parkingSlots){
             if(!slot.isOccupied()){
@@ -38,6 +40,11 @@ public class ParkingFloor {
 
         getLogger().log("Cannot find on this floor?");
         return 0;
+    }
+
+    public void unparkVehicle(int slotNumber){
+        parkingSlots.get(slotNumber).unparkVehicle();
+        numberOfSlotsOccupied--;
     }
 
     public int getFloorNumber() {

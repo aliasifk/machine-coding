@@ -2,8 +2,10 @@ package com.aliasifkhan.parkinglot;
 
 import com.aliasifkhan.core.utils.CommandProcesser;
 import com.aliasifkhan.core.utils.Logger;
+import com.aliasifkhan.parkinglot.exceptions.InvalidTicket;
 import com.aliasifkhan.parkinglot.exceptions.ParkingLotOccupied;
 import com.aliasifkhan.parkinglot.exceptions.VehicleNotFound;
+import com.aliasifkhan.parkinglot.exceptions.VehicleNotSupported;
 
 import java.util.HashMap;
 import java.util.NoSuchElementException;
@@ -24,6 +26,7 @@ public class Core {
     }
 
     public void run(){
+        System.out.println("Enter a command: ");
         while(isRunning){
             String[] command = CommandProcesser.getCommandProcesser().readCommand();
             resolveCommand(command);
@@ -37,14 +40,14 @@ public class Core {
     }
 
 
-    public void parkVehicle(Vehicle.VehicleType vehicleType, String regNo, String color) throws ParkingLotOccupied {
+    public void parkVehicle(Vehicle.VehicleType vehicleType, String regNo, String color) throws ParkingLotOccupied, VehicleNotSupported {
         Ticket ticket = parkingLotHashMap.get(ASSUMED_PARKING_LOT).parkVehicle(new Vehicle(vehicleType, regNo, color));
         ticketHashMap.put(ticket.getId(), ticket);
         getLogger().log("Vehicle Parked!");
     }
 
-    public void unParkVehicle(String ticketId){
-        getLogger().log("Vehicle Unparked!");
+    public void unparkVehicle(String ticketId){
+        parkingLotHashMap.get(ASSUMED_PARKING_LOT).unparkVehicle(ticketHashMap.get(ticketId));
     }
 
     public void displayFreeCount(Vehicle.VehicleType vehicleType){
@@ -83,7 +86,10 @@ public class Core {
             }else if(commandName.equalsIgnoreCase("unpark_vehicle") && command.length >= 2){
 
                 String ticketId = command[1];
-                unParkVehicle(ticketId);
+                if(!ticketHashMap.containsKey(ticketId) || ticketHashMap.get(ticketId).hasExpired()){
+                    throw new InvalidTicket();
+                }
+                unparkVehicle(ticketId);
 
             }
             else if(commandName.equalsIgnoreCase("display")  && command.length >= 3){
@@ -111,6 +117,10 @@ public class Core {
             getLogger().log("Vehicle Not Found", commandName);
         }catch (ParkingLotOccupied e){
             getLogger().log("Parking Lot Occupied!", commandName);
+        } catch (InvalidTicket e) {
+            getLogger().log("Ticket not found or expired", commandName);
+        }catch (VehicleNotSupported e) {
+            getLogger().log("Vehicle not supported", commandName);
         }
 
     }

@@ -1,5 +1,7 @@
 package com.aliasifkhan.parkinglot;
 
+import com.aliasifkhan.parkinglot.exceptions.VehicleNotSupported;
+
 public class ParkingSlot {
 
     private int slotNumber;
@@ -16,8 +18,15 @@ public class ParkingSlot {
         return vehicle != null;
     }
 
-    public void parkVehicle(Vehicle vehicle){
+    public void parkVehicle(Vehicle vehicle) throws VehicleNotSupported {
+        if(supportedVehicleType != vehicle.getVehicleType()){
+            throw new VehicleNotSupported();
+        }
         this.vehicle = vehicle;
+    }
+
+    public void unparkVehicle(){
+        vehicle = null;
     }
 
     public int getSlotNumber() {
