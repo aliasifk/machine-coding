@@ -28,7 +28,7 @@ This repository includes:
 
 ## Contributing
 
-We encourage contributions to this repository. If you'd like to add more problems, improve solutions, enhance boilerplate templates, or provide better explanations, your contributions are welcome. Please follow the standard contribution guidelines outlined in the repository.
+We encourage contributions to this repository. If you'd like to add more problems, improve solutions, enhance boilerplate templates, or provide better explanations, your contributions are welcome.
 
 ## Disclaimer
 
