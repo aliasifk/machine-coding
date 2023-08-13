@@ -36,7 +36,7 @@ public class Core {
     public void createParkingLot(String parkingLotId, int numberOfFloors, int numberOfSlots){
         ASSUMED_PARKING_LOT = parkingLotId;
         parkingLotHashMap.put(parkingLotId, new ParkingLot(parkingLotId, numberOfFloors, numberOfSlots));
-        getLogger().log(Logger.LogLevel.DEBUG,"Parking Lot Created!: ", parkingLotId);
+        getLogger().log(Logger.LogLevel.INFO,"Parking Lot Created!: ", parkingLotId);
     }
 
 
@@ -143,7 +143,7 @@ public class Core {
         getLogger().log(Logger.LogLevel.ERROR, "Please enter a valid command");
     }
     public void displayHR(){
-        getLogger().log("----------------------------------------------------------------------");
+        getLogger().log(Logger.LogLevel.INFO,"----------------------------------------------------------------------");
     }
 
     public Vehicle.VehicleType getVehicleValue(String vehicle) throws VehicleNotFound {

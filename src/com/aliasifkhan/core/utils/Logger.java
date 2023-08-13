@@ -27,7 +27,7 @@ public class Logger {
             return;
         }
 
-        if (logLevel.ordinal() >= this.level.ordinal() || true) {
+        if (logLevel.ordinal() <= this.level.ordinal()) {
             for (Object item : msg) {
                 logMessage.append(item).append(" ");
             }
