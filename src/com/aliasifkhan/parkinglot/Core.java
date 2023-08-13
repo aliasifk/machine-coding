@@ -29,6 +29,9 @@ public class Core {
         System.out.println("Enter a command: ");
         while(isRunning){
             String[] command = CommandProcesser.getCommandProcesser().readCommand();
+            if(command.length == 0 || command[0].equals("") || command[0].equals("\n")){
+                continue;
+            }
             displayHR();
             resolveCommand(command);
         }
