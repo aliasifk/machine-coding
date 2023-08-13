@@ -15,7 +15,4 @@ public class ParkingSlot {
     public boolean isOccupied(){
         return vehicle == null;
     }
-
-
-
 }
