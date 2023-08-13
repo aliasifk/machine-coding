@@ -32,4 +32,8 @@ public class ParkingSlot {
     public int getSlotNumber() {
         return slotNumber;
     }
+
+    public Vehicle.VehicleType getSupportedVehicleType() {
+        return supportedVehicleType;
+    }
 }

@@ -43,11 +43,12 @@ public class Core {
     public void parkVehicle(Vehicle.VehicleType vehicleType, String regNo, String color) throws ParkingLotOccupied, VehicleNotSupported {
         Ticket ticket = parkingLotHashMap.get(ASSUMED_PARKING_LOT).parkVehicle(new Vehicle(vehicleType, regNo, color));
         ticketHashMap.put(ticket.getId(), ticket);
-        getLogger().log("Vehicle Parked!");
+        getLogger().log("Vehicle Parked! with ticket id: ", ticket.getId());
     }
 
     public void unparkVehicle(String ticketId){
         parkingLotHashMap.get(ASSUMED_PARKING_LOT).unparkVehicle(ticketHashMap.get(ticketId));
+        ticketHashMap.remove(ticketId);
     }
 
     public void displayFreeCount(Vehicle.VehicleType vehicleType){
@@ -86,7 +87,7 @@ public class Core {
             }else if(commandName.equalsIgnoreCase("unpark_vehicle") && command.length >= 2){
 
                 String ticketId = command[1];
-                if(!ticketHashMap.containsKey(ticketId) || ticketHashMap.get(ticketId).hasExpired()){
+                if(!ticketHashMap.containsKey(ticketId)){
                     throw new InvalidTicket();
                 }
                 unparkVehicle(ticketId);

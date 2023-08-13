@@ -28,6 +28,7 @@ public class ParkingLot {
                 break;
             }
         }
+
         if(parkableFloor == null || parkableFloor.isOccupied()){
             throw new ParkingLotOccupied();
         }
