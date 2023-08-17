@@ -2,13 +2,12 @@ package com.aliasifkhan.parkinglot;
 
 import com.aliasifkhan.core.utils.CommandProcesser;
 import com.aliasifkhan.core.utils.Logger;
-import com.aliasifkhan.parkinglot.exceptions.InvalidTicket;
-import com.aliasifkhan.parkinglot.exceptions.ParkingLotOccupied;
-import com.aliasifkhan.parkinglot.exceptions.VehicleNotFound;
-import com.aliasifkhan.parkinglot.exceptions.VehicleNotSupported;
+import com.aliasifkhan.parkinglot.commands.*;
+import com.aliasifkhan.parkinglot.exceptions.*;
 import com.aliasifkhan.parkinglot.models.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static com.aliasifkhan.core.utils.Logger.getLogger;
 
@@ -16,12 +15,23 @@ public class Core {
     private HashMap<String, ParkingLot> parkingLotHashMap;
     private HashMap<String, Ticket> ticketHashMap;
 
+    private HashMap<String, Command> commandHashMap;
     public static String ASSUMED_PARKING_LOT;
     private boolean isRunning;
 
     public void init(){
         parkingLotHashMap = new HashMap<>();
         ticketHashMap = new HashMap<>();
+        commandHashMap = new HashMap<>();
+
+
+        commandHashMap.put("create_parking_lot", new CreateParkingLotCommand(4));
+        commandHashMap.put("park_vehicle", new ParkVehicleCommand(4));
+        commandHashMap.put("unpark_vehicle", new UnparkVehicleCommand(2));
+        commandHashMap.put("display", new DisplayCommand(3));
+        commandHashMap.put("exit", new ExitCommand(1));
+
+
         isRunning = true;
     }
 
@@ -41,6 +51,10 @@ public class Core {
         ASSUMED_PARKING_LOT = parkingLotId;
         parkingLotHashMap.put(parkingLotId, new ParkingLot(parkingLotId, numberOfFloors, numberOfSlots));
         getLogger().log(Logger.LogLevel.INFO,"Parking Lot Created!: ", parkingLotId);
+    }
+
+    public void exitSystem(){
+        this.isRunning = false;
     }
 
 
@@ -84,51 +98,13 @@ public class Core {
             invalidCommand();
         }
         String commandName = command[0];
-
-        try{
-            if(commandName.equalsIgnoreCase("create_parking_lot")  && command.length >= 4){
-                String parkingLotId = command[1];
-                int numberOfFloors = Integer.parseInt(command[2]);
-                int numberOfSlots = Integer.parseInt(command[3]);
-                createParkingLot(parkingLotId, numberOfFloors, numberOfSlots);
-
-            }else if(commandName.equalsIgnoreCase("park_vehicle") && command.length >= 4){
-
-                Vehicle.VehicleType vehicleType = getVehicleValue(command[1]);
-                String regNo = command[2];
-                String color = command[3];
-
-                parkVehicle(vehicleType, regNo, color);
-
-            }else if(commandName.equalsIgnoreCase("unpark_vehicle") && command.length >= 2){
-
-                String ticketId = command[1];
-                if(!ticketHashMap.containsKey(ticketId)){
-                    throw new InvalidTicket();
-                }
-                unparkVehicle(ticketId);
-
+        try {
+            if(!commandHashMap.containsKey(commandName)){
+                throw new CommandInvalidException();
             }
-            else if(commandName.equalsIgnoreCase("display")  && command.length >= 3){
-                String displayType = command[1];
-                Vehicle.VehicleType vehicleType = getVehicleValue(command[2]);
-
-
-                if(displayType.equalsIgnoreCase("free_count")){
-                    displayFreeCount(vehicleType);
-                }else if(displayType.equalsIgnoreCase("free_slots")){
-                    displayOccupiedOrFreeSlots(vehicleType, false);
-                }else if(displayType.equalsIgnoreCase("occupied_slots")){
-                    displayOccupiedOrFreeSlots(vehicleType, true);
-                }
-
-            }else if(commandName.equalsIgnoreCase("exit")){
-                isRunning = false;
-            }else{
-                invalidCommand();
-            }
-
-        }catch (NumberFormatException e){
+            commandHashMap.get(commandName).execute(this, command);
+        }
+        catch (CommandInvalidException | NumberFormatException e){
             getLogger().log(Logger.LogLevel.ERROR,"The arguments are invalid for command: ");
         }catch (VehicleNotFound e){
             getLogger().log(Logger.LogLevel.ERROR,"Vehicle Not Found");
@@ -139,8 +115,6 @@ public class Core {
         }catch (VehicleNotSupported e) {
             getLogger().log(Logger.LogLevel.ERROR,"Vehicle not supported");
         }
-
-
     }
 
     public void invalidCommand(){
@@ -158,4 +132,39 @@ public class Core {
         throw new VehicleNotFound();
     }
 
+    public HashMap<String, Ticket> getTicketHashMap() {
+        return ticketHashMap;
+    }
 }
+
+//else if(commandName.equalsIgnoreCase("park_vehicle") && command.length >= 4){
+//
+//        Vehicle.VehicleType vehicleType = getVehicleValue(command[1]);
+//        String regNo = command[2];
+//        String color = command[3];
+//
+//        parkVehicle(vehicleType, regNo, color);
+//
+//        }else if(commandName.equalsIgnoreCase("unpark_vehicle") && command.length >= 2){
+//
+//        if(!ticketHashMap.containsKey(ticketId)){
+//        throw new InvalidTicket();
+//        }
+//        unparkVehicle(ticketId);
+//        String ticketId = command[1];
+//
+//        }
+//        else if(commandName.equalsIgnoreCase("display")  && command.length >= 3){
+//        String displayType = command[1];
+//        Vehicle.VehicleType vehicleType = getVehicleValue(command[2]);
+//
+//
+//        if(displayType.equalsIgnoreCase("free_count")){
+//        displayFreeCount(vehicleType);
+//        }else if(displayType.equalsIgnoreCase("free_slots")){
+//        displayOccupiedOrFreeSlots(vehicleType, false);
+//        }else if(displayType.equalsIgnoreCase("occupied_slots")){
+//        displayOccupiedOrFreeSlots(vehicleType, true);
+//        }
+//
+//        }
