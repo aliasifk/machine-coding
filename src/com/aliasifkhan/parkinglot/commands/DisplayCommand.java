@@ -11,8 +11,7 @@ public class DisplayCommand extends Command{
     }
 
     @Override
-    public void execute(Core core, String[] command) throws CommandInvalidException, ParkingLotOccupied, VehicleNotSupported, VehicleNotFound, InvalidTicket  {
-        super.execute(core, command);
+    public void executeThis(Core core, String[] command) throws CommandInvalidException, ParkingLotOccupied, VehicleNotSupported, VehicleNotFound, InvalidTicket  {
         String displayType = command[1];
         Vehicle.VehicleType vehicleType = core.getVehicleValue(command[2]);
 

@@ -15,5 +15,8 @@ public abstract class Command {
         if(command.length < argsLength){
             throw new CommandInvalidException();
         }
+        executeThis(core, command);
     }
+
+    public abstract void executeThis(Core core, String[] command) throws CommandInvalidException, ParkingLotOccupied, VehicleNotSupported, VehicleNotFound, InvalidTicket;
 }

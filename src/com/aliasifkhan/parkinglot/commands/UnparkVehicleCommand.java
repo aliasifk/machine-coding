@@ -9,8 +9,7 @@ public class UnparkVehicleCommand extends Command{
     }
 
     @Override
-    public void execute(Core core, String[] command) throws ParkingLotOccupied, VehicleNotFound, VehicleNotSupported, InvalidTicket, CommandInvalidException {
-        super.execute(core, command);
+    public void executeThis(Core core, String[] command) throws ParkingLotOccupied, VehicleNotFound, VehicleNotSupported, InvalidTicket, CommandInvalidException {
         String ticketId = command[1];
         if(!core.getTicketHashMap().containsKey(ticketId)){
             throw new InvalidTicket();

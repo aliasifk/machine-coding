@@ -9,8 +9,7 @@ public class ExitCommand extends Command {
     }
 
     @Override
-    public void execute(Core core, String[] command) throws InvalidTicket, CommandInvalidException, ParkingLotOccupied, VehicleNotFound, VehicleNotSupported {
-        super.execute(core, command);
+    public void executeThis(Core core, String[] command) throws InvalidTicket, CommandInvalidException, ParkingLotOccupied, VehicleNotFound, VehicleNotSupported {
         core.exitSystem();
     }
 

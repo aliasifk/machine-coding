@@ -13,8 +13,7 @@ public class CreateParkingLotCommand extends Command{
     }
 
     @Override
-    public void execute(Core core, String[] command) throws CommandInvalidException, ParkingLotOccupied, VehicleNotSupported, VehicleNotFound, InvalidTicket  {
-        super.execute(core, command);
+    public void executeThis(Core core, String[] command) throws CommandInvalidException, ParkingLotOccupied, VehicleNotSupported, VehicleNotFound, InvalidTicket  {
         String parkingLotId = command[1];
         int numberOfFloors = Integer.parseInt(command[2]);
         int numberOfSlots = Integer.parseInt(command[3]);

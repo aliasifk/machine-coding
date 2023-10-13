@@ -11,8 +11,7 @@ public class ParkVehicleCommand extends Command{
     }
 
     @Override
-    public void execute(Core core, String[] command) throws CommandInvalidException, ParkingLotOccupied, VehicleNotSupported, VehicleNotFound, InvalidTicket {
-            super.execute(core, command);
+    public void executeThis(Core core, String[] command) throws CommandInvalidException, ParkingLotOccupied, VehicleNotSupported, VehicleNotFound, InvalidTicket {
             Vehicle.VehicleType vehicleType = core.getVehicleValue(command[1]);
             String regNo = command[2];
             String color = command[3];
