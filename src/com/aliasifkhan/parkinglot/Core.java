@@ -46,14 +46,34 @@ public class Core {
         }
     }
 
+    private void resolveCommand(String[] command){
+        if(command.length == 0){
+            invalidCommand();
+        }
+        String commandName = command[0];
+        try {
+            if(!commandHashMap.containsKey(commandName)){
+                throw new CommandInvalidException();
+            }
+            commandHashMap.get(commandName).execute(this, command);
+        }
+        catch (CommandInvalidException | NumberFormatException e){
+            getLogger().log(Logger.LogLevel.ERROR,"The arguments are invalid for command: ");
+        }catch (VehicleNotFound e){
+            getLogger().log(Logger.LogLevel.ERROR,"Vehicle Not Found");
+        }catch (ParkingLotOccupied e){
+            getLogger().log(Logger.LogLevel.ERROR,"Parking Lot Occupied!");
+        } catch (InvalidTicket e) {
+            getLogger().log(Logger.LogLevel.ERROR,"Ticket not found or expired");
+        }catch (VehicleNotSupported e) {
+            getLogger().log(Logger.LogLevel.ERROR,"Vehicle not supported");
+        }
+    }
+
     public void createParkingLot(String parkingLotId, int numberOfFloors, int numberOfSlots){
         ASSUMED_PARKING_LOT = parkingLotId;
         parkingLotHashMap.put(parkingLotId, new ParkingLot(parkingLotId, numberOfFloors, numberOfSlots));
         getLogger().log(Logger.LogLevel.INFO,"Parking Lot Created!: ", parkingLotId);
-    }
-
-    public void exitSystem(){
-        this.isRunning = false;
     }
 
 
@@ -90,37 +110,8 @@ public class Core {
         }
     }
 
-
-
-    private void resolveCommand(String[] command){
-        if(command.length == 0){
-            invalidCommand();
-        }
-        String commandName = command[0];
-        try {
-            if(!commandHashMap.containsKey(commandName)){
-                throw new CommandInvalidException();
-            }
-            commandHashMap.get(commandName).execute(this, command);
-        }
-        catch (CommandInvalidException | NumberFormatException e){
-            getLogger().log(Logger.LogLevel.ERROR,"The arguments are invalid for command: ");
-        }catch (VehicleNotFound e){
-            getLogger().log(Logger.LogLevel.ERROR,"Vehicle Not Found");
-        }catch (ParkingLotOccupied e){
-            getLogger().log(Logger.LogLevel.ERROR,"Parking Lot Occupied!");
-        } catch (InvalidTicket e) {
-            getLogger().log(Logger.LogLevel.ERROR,"Ticket not found or expired");
-        }catch (VehicleNotSupported e) {
-            getLogger().log(Logger.LogLevel.ERROR,"Vehicle not supported");
-        }
-    }
-
     public void invalidCommand(){
         getLogger().log(Logger.LogLevel.ERROR, "Please enter a valid command");
-    }
-    public void displayHR(){
-        getLogger().log(Logger.LogLevel.INFO,"----------------------------------------------------------------------");
     }
 
     public Vehicle.VehicleType getVehicleValue(String vehicle) throws VehicleNotFound {
@@ -130,8 +121,15 @@ public class Core {
         }
         throw new VehicleNotFound();
     }
-
     public HashMap<String, Ticket> getTicketHashMap() {
         return ticketHashMap;
+    }
+
+    public void exitSystem(){
+        this.isRunning = false;
+    }
+
+    public void displayHR(){
+        getLogger().log(Logger.LogLevel.INFO,"----------------------------------------------------------------------");
     }
 }
