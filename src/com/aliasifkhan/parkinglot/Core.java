@@ -7,7 +7,6 @@ import com.aliasifkhan.parkinglot.exceptions.*;
 import com.aliasifkhan.parkinglot.models.*;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import static com.aliasifkhan.core.utils.Logger.getLogger;
 
@@ -39,7 +38,7 @@ public class Core {
         System.out.println("Enter a command: ");
         while(isRunning){
             String[] command = CommandProcesser.getCommandProcesser().readCommand();
-            if(command.length == 0 || command[0].equals("") || command[0].equals("\n")){
+            if(command.length == 0 || command[0].isEmpty() || command[0].equals("\n")){
                 continue;
             }
             displayHR();
@@ -78,15 +77,15 @@ public class Core {
 
     public void displayOccupiedOrFreeSlots(Vehicle.VehicleType vehicleType, boolean displayOccupied){
         for(ParkingFloor parkingFloor: parkingLotHashMap.get(ASSUMED_PARKING_LOT).getParkingFloors() ){
-            String st = "";
+            StringBuilder st = new StringBuilder();
             for(int i = 0;i < parkingFloor.getParkingSlots().size();i++){
                 ParkingSlot parkingSlot = parkingFloor.getParkingSlots().get(i);
                 if(parkingSlot.getSupportedVehicleType() == vehicleType &&  (parkingSlot.isOccupied() && displayOccupied || !parkingSlot.isOccupied() && !displayOccupied)){
-                    st += String.valueOf(i+1) +", ";
+                    st.append(i + 1).append(", ");
                 }
 
             }
-            getLogger().log(Logger.LogLevel.INFO, displayOccupied? "Occupied": "Free" ,"slots for ", vehicleType," on ",parkingFloor.getFloorNumber(),": ", st);
+            getLogger().log(Logger.LogLevel.INFO, displayOccupied? "Occupied": "Free" ,"slots for ", vehicleType," on ",parkingFloor.getFloorNumber(),": ", st.toString());
 
         }
     }
