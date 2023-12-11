@@ -136,35 +136,3 @@ public class Core {
         return ticketHashMap;
     }
 }
-
-//else if(commandName.equalsIgnoreCase("park_vehicle") && command.length >= 4){
-//
-//        Vehicle.VehicleType vehicleType = getVehicleValue(command[1]);
-//        String regNo = command[2];
-//        String color = command[3];
-//
-//        parkVehicle(vehicleType, regNo, color);
-//
-//        }else if(commandName.equalsIgnoreCase("unpark_vehicle") && command.length >= 2){
-//
-//        if(!ticketHashMap.containsKey(ticketId)){
-//        throw new InvalidTicket();
-//        }
-//        unparkVehicle(ticketId);
-//        String ticketId = command[1];
-//
-//        }
-//        else if(commandName.equalsIgnoreCase("display")  && command.length >= 3){
-//        String displayType = command[1];
-//        Vehicle.VehicleType vehicleType = getVehicleValue(command[2]);
-//
-//
-//        if(displayType.equalsIgnoreCase("free_count")){
-//        displayFreeCount(vehicleType);
-//        }else if(displayType.equalsIgnoreCase("free_slots")){
-//        displayOccupiedOrFreeSlots(vehicleType, false);
-//        }else if(displayType.equalsIgnoreCase("occupied_slots")){
-//        displayOccupiedOrFreeSlots(vehicleType, true);
-//        }
-//
-//        }
